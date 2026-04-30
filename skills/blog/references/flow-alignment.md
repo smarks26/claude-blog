@@ -26,7 +26,7 @@ In 2026 a query reaches a buyer through 5 parallel surfaces, often without a sit
 | 2. SERP + AI Overviews | Google SERP including AIO panels | `blog-geo`, `blog-schema`, `blog-seo-check` |
 | 3. AI assistant citations | ChatGPT, Perplexity, Claude, Gemini, Copilot, You.com | `blog-geo` (citation readiness), `blog-flow optimize` (visibility prompts) |
 | 4. Local pack | Map listings, Google Business Profile | Out of scope for blog content. Use `claude-seo` (`/seo local`, `/seo maps`) for local SEO. |
-| 5. Communities + video | Reddit, YouTube, LinkedIn, Quora, niche forums | `blog-repurpose` (multi-platform), `blog/references/distribution-playbook.md`, `blog-cluster` (interlinked content) |
+| 5. Communities + video | Reddit, YouTube, LinkedIn, Quora, niche forums | `blog-repurpose` (multi-platform), `skills/blog/references/distribution-playbook.md`, `blog-cluster` (interlinked content) |
 
 claude-blog operationalizes surfaces 1, 2, 3, and 5 directly. Surface 4 is delegated to claude-seo. When a blog post targets a query that also surfaces in a community (Reddit thread, YouTube comment), the writer should consider dual-surface thinking: optimize the post for extraction AND consider whether the same answer should also live in the community where the query is asked.
 
