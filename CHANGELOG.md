@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-_No unreleased changes._
+### Changed
+
+- Refreshed brand kit: new animated banner (`assets/banner.svg`) and 5 SVG diagrams under `assets/diagrams/` replacing the purple-era artwork. Same visual system as claude-ads and claude-seo. Old `branding/` assets kept for reference; regenerator at `branding/scripts/generate_diagrams.py`.
 
 ## [1.9.0] - 2026-05-18
 

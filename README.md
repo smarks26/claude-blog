@@ -1,8 +1,7 @@
-<p align="center">
-  <img src="assets/header.jpeg" alt="claude-blog: AI Blog Writing and SEO Optimization Skill for Claude Code" width="100%">
-</p>
-
 # AI Blog Writing & SEO Optimization Skill for Claude Code (`claude-blog`)
+
+<img src="assets/banner.svg" alt="Claude Blog: The Content Operating System" width="100%">
+
 
 <p align="center">
   <a href="https://agentskills.io"><img src="https://img.shields.io/badge/Agent%20Skills-Compatible-blue" alt="Agent Skill"></a>
@@ -155,6 +154,8 @@ Restart Claude Code after installation to activate.
   <img src="assets/blog-write-demo.gif" alt="claude-blog /blog write demo: end-to-end article generation with the 5-gate Delivery Contract" width="100%">
 </p>
 
+<img src="assets/diagrams/03-sub-skill-map-B.svg" alt="claude-blog sub-skill ecosystem: orchestrator hub with 30 sub-skills grouped into 8 clusters (writing, strategy, quality, AI and search, multilingual, research, media, distribution)" width="100%">
+
 | Command | Description |
 |---------|-------------|
 | `/blog write <topic>` | Write a new blog post from scratch |
@@ -279,7 +280,15 @@ Five reference documents under `skills/blog/references/` define the editorial an
 
 Adapted from `pbakaus/impeccable` (Apache 2.0) and `mvanhorn/last30days-skill` (MIT). See [`CONTRIBUTORS.md`](CONTRIBUTORS.md) for attribution.
 
+### FLOW framework
+
+The FLOW framework (Find, Leverage, Optimize, Win) is the evidence-led workflow shared with [`AgriciDaniel/flow`](https://github.com/AgriciDaniel/flow) (CC BY 4.0). Each phase contributes prompts to the orchestrator pipeline; `/blog flow` exposes 30 ready-to-run prompts indexed by phase.
+
+<img src="assets/diagrams/04-framework-B.svg" alt="FLOW framework radial wheel: Find (discover topics), Leverage (amplify assets), Optimize (improve content), Win (convert readers) with 30 representative prompts" width="100%">
+
 ## Delivery contract (v1.9.0)
+
+<img src="assets/diagrams/02-pipeline-A.svg" alt="5-gate Blog Delivery Contract: Capability Discovery, Format Completeness, Visual Verification, Content Review (BLOCKING), Asset and Link Integrity" width="100%">
 
 Every blog passes a 5-gate contract before being shown to the user. The user is never the first reviewer; the gates are.
 
@@ -294,6 +303,8 @@ Every blog passes a 5-gate contract before being shown to the user. The user is 
 Hero image ladder: Banana MCP, direct Gemini API, premium stock (Unsplash, Pexels, Pixabay), Openverse public API. First available wins. Block-and-iterate up to 3 times on any gate failure before escalating to the user. Full spec: [`skills/blog/references/blog-delivery-contract.md`](skills/blog/references/blog-delivery-contract.md).
 
 ## Architecture
+
+<img src="assets/diagrams/01-architecture-B.svg" alt="claude-blog system architecture: orchestrator routes user commands to sub-skills, agents, and scripts; output flows through the 5-gate delivery contract before reaching the user" width="100%">
 
 claude-blog ships as one orchestrator plus 29 sub-skills, 5 agents, 21 references, 12 templates, and 9 root-level scripts. The orchestrator routes user commands to sub-skills, which spawn agents and call scripts via Bash.
 
@@ -361,6 +372,8 @@ See the [How to cite](#how-to-cite) section below or the [`CITATION.cff`](CITATI
 The installer ships only Python scripts and markdown files, never executes remote code beyond what `pip install -r requirements.txt` brings in, and is reviewed against the project [`SECURITY.md`](SECURITY.md) policy on every change. The clone-then-checkout-tag install flow lets you inspect `install.sh` before running it. See [`SECURITY.md`](SECURITY.md) for the full threat model.
 
 ## Roadmap
+
+<img src="assets/diagrams/05-roadmap-A.svg" alt="claude-blog wave roadmap: v1.6.0 foundation, v1.7.0 FLOW framework, v1.8.0 impeccable methodology, v1.9.0 delivery contract (current), v2.0.0 multi-CMS publishing, v3.0.0 blog-as-code" width="100%">
 
 **v1.9.1 (next)**
 - Shared `_count_body_words(html)` function between `blog_render` and `blog_preflight` to close the v1.9.0 audit residual.
