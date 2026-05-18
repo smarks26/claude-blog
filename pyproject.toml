@@ -13,7 +13,7 @@ py-modules = []
 
 [project]
 name = "claude-blog"
-version = "1.8.6"
+version = "1.9.0"
 description = "AI-powered blog creation and optimization skill for Claude Code"
 readme = "README.md"
 license = {text = "MIT"}
@@ -58,6 +58,17 @@ ads = [
     # Closes audit VULN-404 phantom-import (was previously imported with no
     # manifest declaration).
     "google-ads>=22.0.0,<26.0.0",
+]
+presentation = [
+    # v1.9.0 Blog Delivery Contract: enables scripts/blog_preflight.py
+    # (Gate 3 visual verification via patchright), scripts/blog_render.py
+    # (PDF generation via patchright or weasyprint), and
+    # scripts/generate_hero.py (Gemini API hero generation + stock fetch).
+    "patchright>=1.40,<2.0",
+    "weasyprint>=60,<70",
+    "google-genai>=0.5.0,<2.0.0",
+    "requests>=2.32.4,<3.0.0",
+    "markdown>=3.5,<4.0",
 ]
 dev = [
     "pytest>=8.0,<9.0",

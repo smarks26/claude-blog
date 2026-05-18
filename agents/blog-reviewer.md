@@ -175,7 +175,31 @@ When reviewing citations, verify against this tier system:
 1. [Highest impact fix]
 2. [Second priority]
 3. [Third priority]
+
+BLOCKING: true|false (one-line reason)
 ```
+
+## Blocking Decision (v1.9.0)
+
+The scorecard MUST end with a `BLOCKING: true|false (reason)` line. This line is machine-readable by `scripts/blog_preflight.py` Gate 4 and drives the iteration loop in the orchestrator.
+
+Set `BLOCKING: true` if ANY of the following hold:
+
+- Overall score below 90/100 (the Exceptional band)
+- Any P0 issue from `skills/blog/references/editorial-heuristics.md` (fabricated stats, broken structure, plagiarism risk; see that file for the full list)
+- Burstiness score in the Flagged range (too uniform sentence length)
+- More than 3 known AI phrases detected
+- Vocabulary diversity (TTR) below 0.4
+
+Set `BLOCKING: false` only when none of those conditions hold. The reason field is the single most important sentence on the line; it tells the orchestrator what to fix in the next iteration. Examples:
+
+```
+BLOCKING: true (overall 87/100 below threshold; P0 on heuristic 5)
+BLOCKING: true (TTR 0.32 indicates AI-generated content; vary vocabulary)
+BLOCKING: false (cleared all gates; 92/100 overall, no P0)
+```
+
+The reviewer is now a **blocking** gate, not advisory. The user does not see the draft until this line says `false`.
 
 ## Review Guidelines
 
@@ -183,4 +207,4 @@ When reviewing citations, verify against this tier system:
 - Be actionable: every issue must have a concrete fix
 - Be honest: do not inflate scores. A 75 that deserves a 75 is more helpful than a generous 85
 - Score content you cannot check (page speed, mobile) as N/A and note it
-- Count exact statistics, images, charts, headings - do not estimate
+- Count exact statistics, images, charts, headings; do not estimate

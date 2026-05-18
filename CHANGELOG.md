@@ -7,6 +7,53 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+_No unreleased changes._
+
+## [1.9.0] - 2026-05-18
+
+### Blog Delivery Contract (mandatory pre-presentation gate)
+
+The rankenstein.pro audit-asymptote drafting cycle surfaced a structural gap: `/blog write` had a `blog-reviewer` step but it ran as advisory. Sloppy drafts (no real hero image, broken og:image, SVG overflows visible on first render, no .pdf, .md/.html divergence) reached the user before any gate fired. v1.9.0 converts the Category-3 "reviewer exists but does not block" defect into infrastructure. Same lesson as the v1.8.x cycle; one layer up.
+
+**Five-gate delivery contract** (`skills/blog/references/blog-delivery-contract.md`):
+
+1. Capability Discovery: enumerate MCP servers, env vars, optional deps, agents, helper scripts before writing. Output `capabilities.json`.
+2. Format Completeness: every draft ships `.md` + `.html` + `.pdf` + a real `hero.<ext>`. The renderer (`scripts/blog_render.py`) produces all three from the same source.
+3. Visual Verification: render the HTML via `patchright` at 3 viewport widths (375, 768, 1280), capture screenshots, assert no SVG child overflows its viewBox, validate JSON-LD, check dark-mode color swap, capture console errors.
+4. Content Review (BLOCKING): `blog-reviewer` agent scores against the rendered HTML. Threshold: score 90/100 or higher AND zero P0 issues from `editorial-heuristics.md`. Reviewer emits `BLOCKING: true|false (reason)` line for machine-readable gating.
+5. Asset + Link Integrity: every img src resolves, og:image points to a real file, external links return 200, JSON-LD wordCount matches body word count within 5%.
+
+**Hero image generation ladder** (`scripts/generate_hero.py`):
+
+1. Banana MCP (orchestrator-level; when nanobanana-mcp is loaded)
+2. Direct Gemini API via google-genai (when GOOGLE_AI_API_KEY is set)
+3. Premium stock APIs: Unsplash, Pexels, Pixabay (any key suffices)
+4. Openverse public API (CC-licensed; no key required)
+5. Block with setup instructions if none succeed
+
+Iteration loop: on any gate failure the orchestrator iterates up to 3 times before escalating to the user with a diagnostic. The user is no longer the first reviewer; the gates are.
+
+**Added**
+
+- `skills/blog/references/blog-delivery-contract.md` (the contract spec)
+- `scripts/blog_preflight.py` (runs Gates 1, 2, 3, 5; reads Gate 4 output)
+- `scripts/blog_render.py` (md to html to pdf, deterministic)
+- `scripts/generate_hero.py` (5-step image ladder)
+- `tests/test_blog_delivery_contract.py` (locks the contract in place)
+- `pyproject.toml`: new `presentation` optional-deps group (patchright, weasyprint, google-genai, requests, markdown)
+
+**Changed**
+
+- `agents/blog-reviewer.md`: scorecard now ends with `BLOCKING: true|false (reason)` line; blocking thresholds documented (score 90+, zero P0)
+- `skills/blog/SKILL.md`: new Step 6.5 between Score and Deliver; reference count 20 to 21
+- `skills/blog-write/SKILL.md`: new Phase 6.5 enforcement section
+- `skills/blog-rewrite/SKILL.md`: new Phase 5.5 enforcement section
+- `install.sh`, `install.ps1`, `uninstall.sh`, `uninstall.ps1`: ship the 3 new scripts (caught immediately by `test_installer_sync.py` from v1.8.6)
+
+**Why this matters**
+
+The v1.8.x cycle taught a lesson: audits ladder you up to your asymptote; infrastructure raises the asymptote. v1.9.0 applies that one level up, from the project's code to the project's own output. Sloppy drafts cannot reach the user because the gates use the project's tools automatically, without depending on the writer to remember.
+
 ## [1.8.6] - 2026-05-17
 
 Seventh-round hostile-audit hardening. The 7th audit caught 18 file:line

@@ -440,7 +440,7 @@ After installation, `claude-blog` occupies this structure inside `~/.claude/`:
 
 **Component counts (v1.8.5)**: 1 orchestrator + 29 sub-skills = 30 skill dirs
 total, 5 agents (blog-researcher, blog-writer, blog-seo, blog-reviewer,
-blog-translator), 20 references in `skills/blog/references/` (plus per-sub-skill
+blog-translator), 21 references in `skills/blog/references/` (plus per-sub-skill
 references and 30 synced FLOW prompts under `skills/blog-flow/references/`),
 12 content templates, 6 root-level scripts (`scripts/analyze_blog.py`,
 `cognitive_load.py`, `discourse_research.py`, `load_untrusted_root.py`,

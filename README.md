@@ -124,6 +124,20 @@ Five reference documents under `skills/blog/references/` define the editorial an
 
 Adapted from `pbakaus/impeccable` (Apache 2.0) and `mvanhorn/last30days-skill` (MIT). See `CONTRIBUTORS.md` for the full attribution.
 
+### Delivery contract (v1.9.0)
+
+Every blog passes a 5-gate contract before being shown to the user. The user is never the first reviewer; the gates are.
+
+| Gate | Enforces | Implementation |
+|---|---|---|
+| 1. Capability Discovery | Required tools and agents present before write | `scripts/blog_preflight.py --gate 1` |
+| 2. Format Completeness | `.md` + `.html` + `.pdf` + real hero image | `scripts/blog_render.py`, `scripts/generate_hero.py` |
+| 3. Visual Verification | No SVG overflow, valid JSON-LD, dark mode works | `patchright` at 3 viewport widths |
+| 4. Content Review (BLOCKING) | `blog-reviewer` score 90+ AND zero P0 issues | `agents/blog-reviewer.md` (now blocking) |
+| 5. Asset + Link Integrity | Every img resolves, og:image exists, links return 200 | `scripts/blog_preflight.py --gate 5` |
+
+Hero image ladder: Banana MCP, direct Gemini API, premium stock (Unsplash, Pexels, Pixabay), Openverse public API. First available wins. Block-and-iterate up to 3 times on any gate failure before escalating to the user. Full spec: `skills/blog/references/blog-delivery-contract.md`.
+
 ## Features
 
 ### 12 Content Templates
@@ -193,7 +207,7 @@ claude-blog/
 ├── skills/
 │   ├── blog/                           # Main orchestrator
 │   │   ├── SKILL.md                    # Routes all 29 user-facing commands (28 distinct + `/blog update` alias)
-│   │   ├── references/                 # 20 on-demand reference docs (5 new in v1.8.0)
+│   │   ├── references/                 # 21 on-demand reference docs (5 new in v1.8.0, 1 new in v1.9.0)
 │   │   └── templates/                  # 12 content type templates
 │   ├── blog-write/SKILL.md            # Sub-skills (28 user-facing + 2 internal-only)
 │   ├── blog-rewrite/SKILL.md

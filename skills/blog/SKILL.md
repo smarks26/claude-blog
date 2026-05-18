@@ -16,7 +16,7 @@ license: MIT
 compatibility: Requires Claude Code and Python 3.11+ for quality scoring
 metadata:
   author: AgriciDaniel
-  version: "1.8.6"
+  version: "1.9.0"
 user-invokable: true
 argument-hint: "[write|rewrite|analyze|brief|calendar|cannibalization|strategy|outline|seo-check|schema|repurpose|geo|image|audit|factcheck|persona|brand|discourse|taxonomy|notebooklm|audio|google|update|cluster|multilingual|translate|localize|locale-audit|flow] [topic-or-file]"
 ---
@@ -158,6 +158,7 @@ These are hard rules. Never ship content that violates them:
 | Image alt text | Required on all images | Descriptive, includes topic keywords naturally |
 | Self-promotion | Max 1 brand mention | Author bio context only |
 | Chart diversity | No duplicate types | Each chart must be a different type |
+| Delivery contract (v1.9.0) | All 5 gates pass | Blocked drafts iterate up to 3x; see `references/blog-delivery-contract.md` |
 
 ## Community Footer
 
@@ -225,7 +226,7 @@ Blog quality is scored across 5 categories (100 points total):
 
 ## Reference Files
 
-Load on-demand as needed (20 references; 13 original + 5 v1.8.0 methodology + 2 supplemental):
+Load on-demand as needed (21 references; 13 original + 5 v1.8.0 methodology + 2 supplemental + 1 v1.9.0 delivery contract):
 
 - `references/google-landscape-2026.md`: December 2025 Core Update, E-E-A-T, algorithm changes
 - `references/geo-optimization.md`: GEO/AEO techniques, AI citation factors
@@ -247,6 +248,7 @@ Load on-demand as needed (20 references; 13 original + 5 v1.8.0 methodology + 2 
 - `references/cognitive-load.md`: per-section concept-density model with `scripts/cognitive_load.py` (v1.8.0)
 - `references/research-quality.md`: 5-dim research rubric, pre-flight trap classes, cross-source clustering, freshness floors (v1.8.0)
 - `references/synthesis-contract.md`: 6 LAWs for research-synthesis output (v1.8.0)
+- `references/blog-delivery-contract.md`: 5-gate enforcement between content generation and user delivery (v1.9.0)
 
 ## Content Templates
 
@@ -345,7 +347,8 @@ Standard execution order for `/blog write`:
 4. **Write**: Spawn `blog-writer` agent with research packet and outline
 5. **Optimize**: Spawn `blog-seo` agent for on-page validation
 6. **Score**: Spawn `blog-reviewer` agent for 100-point quality audit
-7. **Deliver**: Output final content with scorecard and improvement notes
+6.5. **Delivery Contract Enforcement (v1.9.0)**: Run the 5-gate preflight per `references/blog-delivery-contract.md`. Generate hero via `scripts/generate_hero.py`. Render `.md`/`.html`/`.pdf` via `scripts/blog_render.py`. Run `scripts/blog_preflight.py --draft <folder> --strict`. Check the `BLOCKING:` line in `<folder>/review.md` written by Step 6. If any gate blocks: loop back to Step 4 with the failure diagnostic; max 3 iterations; on the 3rd failure, STOP and present the diagnostic instead of the draft. The user is NEVER the first reviewer; the gates are.
+7. **Deliver**: Output final content with scorecard, `preview/*.png` screenshots, and improvement notes ONLY when all gates pass
 
 For `/blog analyze`, only steps 1 and 6 run (read + score).
 For `/blog audit`, step 6 runs in parallel across all posts in the directory.
